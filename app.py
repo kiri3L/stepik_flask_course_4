@@ -105,6 +105,7 @@ def render_booking_done_page():
 
     if not update_booking(name, phone, day, time, id):
         return render_template('404_error_page.html'), 404
+    teacher = get_teacher(id, get_teachers())
     return render_template('booking_done.html', time=time, day=day_name, name=name, phone=phone, pictuer=teacher["picture"])
 
 

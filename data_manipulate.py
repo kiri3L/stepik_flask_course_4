@@ -54,6 +54,5 @@ def update_booking(client_name, client_phone, day, time, teacher_id):
     return True
 
 
-
 if __name__ == "__main__":
     save("teachers.json", teachers)
