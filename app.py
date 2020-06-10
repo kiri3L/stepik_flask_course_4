@@ -81,4 +81,5 @@ def render_booking_done_page():
     return render_template('booking_done.html', time=time, day=day_name, name=name, phone=phone, pictuer=teacher["picture"])
 
 
-app.run("0.0.0.0", 8888)
+if __name__ == '__main__':
+    app.run()
