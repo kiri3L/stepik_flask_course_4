@@ -1,0 +1,15 @@
+{% block timetable %}
+{% if is_free %}
+{% for day, time_intervals  in teacher.free.items() %}
+    <h6 class="mt-4">{{ days_of_the_week[day]}}</h6>
+    {% for interval, status in time_intervals.items() %}
+        {% if status %}
+            <a href="/booking/{{teacher.id}}/{{day}}//{{interval}}/" class="btn btn-outline-success mr-2">{{interval}} свободно</a>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% else %}
+<p>Нет свободных уроков</p>
+{% endif %}
+{% endblock %}
