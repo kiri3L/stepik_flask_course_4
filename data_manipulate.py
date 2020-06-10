@@ -2,7 +2,10 @@ import json
 
 from data import teachers
 from data import days_of_the_week
-from data import goals
+
+booking_file = "booking.json"
+request_file = "request.json"
+teachers_file = "teachers.json"
 
 
 def save(filename, data):
@@ -16,7 +19,7 @@ def load(filename):
 
 
 def get_teachers():
-    return load("teachers.json")
+    return load(teachers_file)
 
 
 def filter_teachers_by_goal(goal, teachers):
@@ -32,9 +35,9 @@ def get_teacher(id, teachers):
 
 
 def update_request(client_name, client_phone, goal, time):
-    data = load("request.json")
+    data = load(request_file)
     data.append({"client": client_name, "phone": client_phone, "goal": goal, "time": time})
-    save("request.json", data)
+    save(request_file, data)
 
 
 def update_booking(client_name, client_phone, day, time, teacher_id):
@@ -47,12 +50,14 @@ def update_booking(client_name, client_phone, day, time, teacher_id):
     if not teacher["free"][day][time]:
         return False
     teacher["free"][day][time] = False
-    save("teachers.json", teachers)
-    data = load("booking.json")
+    save(teachers_file, teachers)
+    data = load(booking_file)
     data.append({"client": client_name, "phone": client_phone, "teacher": teacher_id, "day": day, "time": time})
-    save("booking.json", data)
+    save(booking_file, data)
     return True
 
 
 if __name__ == "__main__":
-    save("teachers.json", teachers)
+    save(teachers_file, teachers)
+    save(booking_file, [])
+    save(request_file, [])
