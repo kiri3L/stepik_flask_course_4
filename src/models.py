@@ -1,4 +1,4 @@
-from src import db
+from src.app import db
 # from sqlalchemy.dialects.postgresql import JSONB
 
 teachers_goals_association = db.Table('teachers_goals',

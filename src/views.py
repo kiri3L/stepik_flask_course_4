@@ -1,7 +1,7 @@
 import json
 
 from flask import render_template, request, redirect
-from src import app
+from src.app import app
 from src.data import goals, days_of_the_week
 from src.models import Teacher, Request, Booking, Goal
 from src.forms import BookingForm, RequestForm
