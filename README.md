@@ -1,12 +1,31 @@
-# stepik_flask_course_3
+# stepik_flask_course_4
 
-Скрипт, который переносит данные из data.py в .json файл находится в
-фале data_manipulate.py
+Перед первым запуском необходимо выполнить следующие действия
 
-Откатить все .json файлы к первоначальному состоянию
+1. Создать переменную окружения
 ```
-python3 data_manipulation.py
+	export DATABASE_URL='postgresql://user:password@hostname:port/database_name'
 ```
 
-Посмотреть работу приложения можно с помощью heroku [тут](https://stapik-flask-course-week-3.herokuapp.com/) 
+2. Выполнить миграцию
+```
+	flask db upgrade
+```
+3. Зполнить базу данных данными из .json файлов
+```
+	python3 run.py --init
+```
 
+После этого можно запустить приложение двумя способами:
+
+1. flask
+```
+	python3 run.py
+```
+
+2. Gunicorn
+```
+	gunicorn src:app
+```
+
+Работающее приложения можно посмотреть [тут](https://dry-everglades-18357.herokuapp.com/)
