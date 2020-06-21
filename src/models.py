@@ -1,4 +1,4 @@
-from src.app import db
+from src import db
 
 teachers_goals_association = db.Table('teachers_goals',
                                       db.Column('teacher_id',
@@ -24,7 +24,6 @@ class Teacher(db.Model):
                             back_populates='teachers')
 
     bookings = db.relationship('Booking', back_populates='teacher')
-    pass
 
 
 class Goal(db.Model):
@@ -49,7 +48,6 @@ class Booking(db.Model):
     time_interval = db.Column(db.String, nullable=False)
 
     teacher = db.relationship('Teacher', back_populates='bookings')
-    pass
 
 
 class Request(db.Model):
@@ -60,5 +58,4 @@ class Request(db.Model):
 
     goal_key = db.Column(db.String, db.ForeignKey('goals.key'))
     goal = db.relationship('Goal', back_populates='requests')
-    pass
 

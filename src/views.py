@@ -1,5 +1,5 @@
 from flask import render_template, request
-from src.app import app
+from src import app
 from src.data import goals, days_of_the_week
 from src.data_manipulate import get_teachers, filter_teachers_by_goal, get_teacher, update_request, update_booking
 

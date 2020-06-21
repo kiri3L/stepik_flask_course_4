@@ -1,4 +1,4 @@
-# stapik_flask_course_3
+# stepik_flask_course_3
 
 Скрипт, который переносит данные из data.py в .json файл находится в
 фале data_manipulate.py

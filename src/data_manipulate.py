@@ -2,6 +2,7 @@ import json
 
 from src.data import teachers
 from src.data import days_of_the_week
+from src.models import *
 
 booking_file = "src/json/booking.json"
 request_file = "src/json/request.json"
