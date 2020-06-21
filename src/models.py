@@ -44,7 +44,7 @@ class Booking(db.Model):
     client_name = db.Column(db.String, nullable=False)
 
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
-    day_of_the_week = db.Column(db.Integer, nullable=False)
+    day_of_the_week = db.Column(db.String, nullable=False)
     # CheckConstraint('day_of_the_week > 0 and day_of_the_week < 8')
     time_interval = db.Column(db.String, nullable=False)
 

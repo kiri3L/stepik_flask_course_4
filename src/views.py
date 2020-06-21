@@ -1,7 +1,7 @@
 import json
 
 from flask import render_template, request, redirect
-from src.app import app
+from src.app import app, db
 from src.data import goals, days_of_the_week
 from src.models import Teacher, Request, Booking, Goal
 from src.forms import BookingForm, RequestForm
@@ -40,39 +40,17 @@ def render_request_page():
     form = RequestForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-
-            return redirect('/')
+            args = {'client_name': form.name.data,
+                    'client_phone': form.phone.data,
+                    'time': form.time.data,
+                    'goal_key': form.goals.data}
+            r = Request(**args)
+            db.session.add(r)
+            db.session.commit()
+            args['goal_key'] = goals[args['goal_key']]
+            return render_template('request_done.html', **args)
     return render_template('request.html', goals=goals, form=form)
 
-# @app.route("/request/")
-# def render_request_page():
-#     return render_template("request.html", goals=goals)
-#
-#
-# @app.route("/request_done/", methods=["POST"])
-# def render_request_done_page():
-#     # сохранить данные в request.json
-#
-#     name = request.form.get("name")
-#     phone = request.form.get("phone")
-#     goal = request.form.get("goal")
-#     goal_value = goals[goal]
-#     time = request.form.get("time")
-#
-#     if goal not in goals:
-#         return render_template('404_error_page.html'), 404
-#     update_request(name, phone, goal, time)
-#     return render_template('request_done.html', goal=goal_value, time=time, name=name, phone=phone)
-#
-
-# @app.route("/booking/<int:id>/<day>/<time>/")
-# def render_booking_page(id, day, time):
-#     teacher = Teacher.query.get_or_404(id)
-#     return render_template("booking.html",
-#                            day=day,
-#                            time=time,
-#                            teacher=teacher,
-#                            days_of_the_week=days_of_the_week)
 
 @app.route('/booking/<int:id>/<day>/<time>/', methods=['GET', 'POST'])
 def render_booking_page(id, day, time):
@@ -88,20 +66,22 @@ def render_booking_page(id, day, time):
     else:
         form = BookingForm()
         if form.validate_on_submit():
-            return redirect('/')
+            args = {'client_phone': form.phone.data,
+                    'client_name': form.name.data,
+                    'teacher_id': form.hidden_teacher_id.data,
+                    'day_of_the_week': form.hidden_day_of_the_week.data,
+                    'time_interval': form.hidden_time_interval.data}
+            teacher = Teacher.query.get_or_404(args['teacher_id'])
+            timetable = json.loads(teacher.timetable)
+            if not timetable[args['day_of_the_week']][args['time_interval']]:
+                pass
+            timetable[args['day_of_the_week']][args['time_interval']] = False
+            teacher.timetable = json.dumps(timetable)
+            b = Booking(**args)
+            db.session.add(b)
+            db.session.add(teacher)
+            db.session.commit()
+            return render_template('booking_done.html', **args, picture=teacher.picture)
         return render_template('booking.html', form=form, **args)
 
 
-# @app.route("/booking_done/", methods=["POST"])
-# def render_booking_done_page():
-#     name = request.form.get("clientName")
-#     phone = request.form.get("clientPhone")
-#     day = request.form.get("clientWeekday")
-#     day_name = days_of_the_week[day]
-#     time = request.form.get("clientTime")
-#     id = int(request.form.get("clientTeacher"))
-#
-#     if not update_booking(name, phone, day, time, id):
-#         return render_template('404_error_page.html'), 404
-#     teacher = get_teacher(id, get_teachers())
-#     return render_template('booking_done.html', time=time, day=day_name, name=name, phone=phone, pictuer=teacher["picture"])
