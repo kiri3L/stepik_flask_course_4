@@ -1,6 +1,6 @@
 {% block timetable %}
 {% if is_free %}
-{% for day, time_intervals  in teacher.free.items() %}
+{% for day, time_intervals  in teacher.timetable.items() %}
     <h6 class="mt-4">{{ days_of_the_week[day]}}</h6>
     {% for interval, status in time_intervals.items() %}
         {% if status %}

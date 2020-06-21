@@ -1,4 +1,5 @@
-if __name__ == '__main__':
-    import src.json_to_postgres
+import src
+# if __name__ == '__main__':
+#     import src.json_to_postgres
 
-# src.app.run()
+src.app.run()
