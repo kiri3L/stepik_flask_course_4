@@ -1,14 +1,7 @@
-from flask import Flask, render_template, request
-from data import goals
-from data import days_of_the_week
-
-from data_manipulate import get_teachers, \
-                            get_teacher,\
-                            update_request,\
-                            update_booking, \
-                            filter_teachers_by_goal
-
-app = Flask(__name__)
+from flask import render_template, request
+from src.app import app
+from src.data import goals, days_of_the_week
+from src.data_manipulate import get_teachers, filter_teachers_by_goal, get_teacher, update_request, update_booking
 
 
 @app.route("/")
@@ -79,7 +72,3 @@ def render_booking_done_page():
         return render_template('404_error_page.html'), 404
     teacher = get_teacher(id, get_teachers())
     return render_template('booking_done.html', time=time, day=day_name, name=name, phone=phone, pictuer=teacher["picture"])
-
-
-if __name__ == '__main__':
-    app.run()

@@ -1,11 +1,11 @@
 import json
 
-from data import teachers
-from data import days_of_the_week
+from src.data import teachers
+from src.data import days_of_the_week
 
-booking_file = "booking.json"
-request_file = "request.json"
-teachers_file = "teachers.json"
+booking_file = "src/json/booking.json"
+request_file = "src/json/request.json"
+teachers_file = "src/json/teachers.json"
 
 
 def save(filename, data):
