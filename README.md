@@ -2,9 +2,11 @@
 
 Перед первым запуском необходимо выполнить следующие действия
 
-1. Создать переменную окружения
+
+1. Создать переменные окружения
 ```
 	export DATABASE_URL='postgresql://user:password@hostname:port/database_name'
+	export SECRET_KEY=????????
 ```
 
 2. Выполнить миграцию
